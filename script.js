@@ -1,4 +1,4 @@
-// Datos de la malla
+// Malla curricular completa
 const malla = {
   "I": [
     { nombre: "Preliminares de Matemática", abre: ["Algebra", "Análisis Matemático I a"] },
@@ -76,27 +76,21 @@ const malla = {
   ]
 };
 
-// Estado de cada ramo
-const estadoRamos = {};
+// ------------------- LÓGICA INTERACTIVA -------------------
 
-// Inicializar DOM
 const estadoRamos = {};
 const ramosPorSemestre = {};
 
-// Recolectar todos los ramos y dependencias
+// Construcción del estado de todos los ramos
 for (const [semestre, ramos] of Object.entries(malla)) {
   ramosPorSemestre[semestre] = [];
   for (const ramo of ramos) {
-    // Crear estado del ramo si no existe
     if (!estadoRamos[ramo.nombre]) {
       estadoRamos[ramo.nombre] = { aprobado: false, requisitos: [], abre: [] };
     }
     estadoRamos[ramo.nombre].abre = ramo.abre;
-
-    // Registrar en el semestre
     ramosPorSemestre[semestre].push(ramo.nombre);
 
-    // Para cada dependencia, agregarle el requisito actual
     for (const destino of ramo.abre) {
       if (!estadoRamos[destino]) {
         estadoRamos[destino] = { aprobado: false, requisitos: [], abre: [] };
@@ -106,9 +100,10 @@ for (const [semestre, ramos] of Object.entries(malla)) {
   }
 }
 
-// Paso 2: Crear HTML de todos los ramos
+// Crear contenedor DOM
 const mallaDiv = document.getElementById("malla");
 
+// Crear semestres con sus ramos
 for (const [semestre, ramos] of Object.entries(ramosPorSemestre)) {
   const semDiv = document.createElement("div");
   semDiv.className = "semestre";
@@ -122,7 +117,7 @@ for (const [semestre, ramos] of Object.entries(ramosPorSemestre)) {
   mallaDiv.appendChild(semDiv);
 }
 
-// Paso 3: Agregar ramos "huérfanos" que no estaban en ningún semestre
+// Crear columna "Otros" para ramos no ubicados
 const ramosNoUbicados = Object.keys(estadoRamos).filter(nombre =>
   !Object.values(ramosPorSemestre).flat().includes(nombre)
 );
@@ -140,7 +135,7 @@ if (ramosNoUbicados.length > 0) {
   mallaDiv.appendChild(otrosDiv);
 }
 
-// Función para crear un ramo con botón
+// Función para crear el div de cada ramo
 function crearRamoDiv(nombre) {
   const div = document.createElement("div");
   div.className = "ramo";
@@ -156,7 +151,7 @@ function crearRamoDiv(nombre) {
   return div;
 }
 
-// Función para marcar ramos desbloqueados/aprobados
+// Actualiza visualmente los estados
 function actualizarEstado() {
   for (const [nombre, datos] of Object.entries(estadoRamos)) {
     const div = document.getElementById(nombre);
@@ -173,11 +168,12 @@ function actualizarEstado() {
   }
 }
 
-// Acción al presionar "Aprobé"
+// Marca un ramo como aprobado
 function aprobarRamo(nombre) {
   if (!estadoRamos[nombre] || estadoRamos[nombre].aprobado) return;
   estadoRamos[nombre].aprobado = true;
   actualizarEstado();
 }
 
+// Inicializar estado
 actualizarEstado();
