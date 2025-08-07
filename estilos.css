@@ -16,11 +16,10 @@ h1 {
   display: flex;
   overflow-x: auto;
   gap: 20px;
-  align-items: flex-start;
   padding-bottom: 20px;
 }
 
-/* Semestre columna */
+/* Columna de cada semestre */
 .semestre {
   min-width: 220px;
   background-color: #ffe0ef;
@@ -39,7 +38,7 @@ h1 {
   padding-bottom: 6px;
 }
 
-/* Tarjeta de asignatura */
+/* Asignatura individual */
 .asignatura {
   background-color: #fff;
   border: 2px solid #ffb6c1;
