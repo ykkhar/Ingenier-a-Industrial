@@ -1,16 +1,15 @@
-// Estructura de semestres con asignaturas y requisitos
 const malla = {
   "Semestre 1": {
     "Preliminares de Matemática": [],
-    "Algebra": ["Preliminares de Matemática"],
+    "Álgebra": ["Preliminares de Matemática"],
     "Análisis Matemático I a": ["Preliminares de Matemática"],
     "Ingeniería y Sistemas Socioeconómicos": []
   },
   "Semestre 2": {
-    "Geometría Analítica": ["Algebra", "Análisis Matemático I a"],
+    "Geometría Analítica": ["Álgebra", "Análisis Matemático I a"],
     "Sistemas de Representación I": [],
     "Análisis Matemático I b": ["Análisis Matemático I a"],
-    "Física I": ["Algebra", "Análisis Matemático I a"]
+    "Física I": ["Álgebra", "Análisis Matemático I a"]
   },
   "Semestre 3": {
     "Análisis Matemático II": ["Geometría Analítica", "Análisis Matemático I b"],
@@ -19,13 +18,9 @@ const malla = {
     "Estabilidad I": ["Física I", "Análisis Matemático I b", "Sistemas de Representación I"],
     "Inglés I": []
   }
-  // Puedes seguir agregando más semestres...
 };
 
-// Set de asignaturas aprobadas
 const aprobadas = new Set();
-
-// Map de botones para acceder fácilmente y habilitar cuando sea necesario
 const botones = new Map();
 
 function crearMalla() {
@@ -49,7 +44,7 @@ function crearMalla() {
 
       const btn = document.createElement("button");
       btn.textContent = "Aprobar";
-      btn.disabled = !requisitos.every(r => aprobadas.has(r));
+      btn.disabled = requisitos.length > 0 && !requisitos.every(r => aprobadas.has(r));
       btn.addEventListener("click", () => aprobarAsignatura(asignatura));
 
       botones.set(asignatura, btn);
@@ -68,18 +63,18 @@ function aprobarAsignatura(nombre) {
 
   aprobadas.add(nombre);
 
-  const tarjeta = document.getElementById(nombre);
-  tarjeta.classList.add("aprobada");
+  const card = document.getElementById(nombre);
+  card.classList.add("aprobada");
 
-  const boton = botones.get(nombre);
-  boton.disabled = true;
-  boton.textContent = "Aprobada";
+  const btn = botones.get(nombre);
+  btn.disabled = true;
+  btn.textContent = "Aprobada";
 
-  actualizarDesbloqueos();
+  desbloquearAsignaturas();
 }
 
-function actualizarDesbloqueos() {
-  for (const [asignatura, requisitos] of Object.entries(flatten(malla))) {
+function desbloquearAsignaturas() {
+  for (const [asignatura, requisitos] of Object.entries(flattenMalla())) {
     if (aprobadas.has(asignatura)) continue;
 
     const puedeDesbloquear = requisitos.every(r => aprobadas.has(r));
@@ -90,12 +85,12 @@ function actualizarDesbloqueos() {
   }
 }
 
-function flatten(obj) {
-  const result = {};
-  for (const asignaturas of Object.values(obj)) {
-    Object.assign(result, asignaturas);
+function flattenMalla() {
+  const plano = {};
+  for (const asignaturas of Object.values(malla)) {
+    Object.assign(plano, asignaturas);
   }
-  return result;
+  return plano;
 }
 
 window.onload = crearMalla;
