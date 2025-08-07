@@ -80,6 +80,20 @@ const malla = {
 const estadoRamos = {};
 
 // Inicializar DOM
+// Construir estadoRamos primero (toda la lógica de requisitos)
+for (const [semestre, ramos] of Object.entries(malla)) {
+  for (const ramo of ramos) {
+    if (!estadoRamos[ramo.nombre]) {
+      estadoRamos[ramo.nombre] = { aprobado: false, requisitos: [], abre: ramo.abre };
+    }
+    for (const destino of ramo.abre) {
+      if (!estadoRamos[destino]) estadoRamos[destino] = { aprobado: false, requisitos: [], abre: [] };
+      estadoRamos[destino].requisitos.push(ramo.nombre);
+    }
+  }
+}
+
+// Crear el DOM (con todos los ramos, ordenados por semestre)
 const mallaDiv = document.getElementById("malla");
 
 for (const [semestre, ramos] of Object.entries(malla)) {
@@ -88,35 +102,34 @@ for (const [semestre, ramos] of Object.entries(malla)) {
   semDiv.innerHTML = `<h2>Semestre ${semestre}</h2>`;
 
   for (const ramo of ramos) {
-    const ramoDiv = document.createElement("div");
-    ramoDiv.className = "ramo";
-    ramoDiv.id = ramo.nombre;
-    ramoDiv.textContent = ramo.nombre;
-
-    const boton = document.createElement("button");
-    boton.className = "boton";
-    boton.textContent = "Aprobé";
-    boton.onclick = () => aprobarRamo(ramo.nombre);
-
-    ramoDiv.appendChild(boton);
+    const ramoDiv = crearRamoDiv(ramo.nombre);
     semDiv.appendChild(ramoDiv);
-    estadoRamos[ramo.nombre] = { aprobado: false, requisitos: [], abre: ramo.abre };
-
-    // Guardar los requisitos al revés
-    for (const destino of ramo.abre) {
-      if (!estadoRamos[destino]) estadoRamos[destino] = { aprobado: false, requisitos: [], abre: [] };
-      estadoRamos[destino].requisitos.push(ramo.nombre);
-    }
   }
 
   mallaDiv.appendChild(semDiv);
 }
 
-// Activar los ramos iniciales (sin requisitos)
+// Crear div visual de cada ramo
+function crearRamoDiv(nombre) {
+  const div = document.createElement("div");
+  div.className = "ramo";
+  div.id = nombre;
+  div.textContent = nombre;
+
+  const boton = document.createElement("button");
+  boton.className = "boton";
+  boton.textContent = "Aprobé";
+  boton.onclick = () => aprobarRamo(nombre);
+
+  div.appendChild(boton);
+  return div;
+}
+
 function actualizarEstado() {
   for (const [nombre, datos] of Object.entries(estadoRamos)) {
     const div = document.getElementById(nombre);
     if (!div) continue;
+
     if (datos.aprobado) {
       div.classList.add("aprobado");
       div.classList.remove("activo");
@@ -134,5 +147,4 @@ function aprobarRamo(nombre) {
   actualizarEstado();
 }
 
-// Inicialización
 actualizarEstado();
