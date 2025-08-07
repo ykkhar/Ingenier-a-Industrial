@@ -1,7 +1,7 @@
 body {
-  font-family: 'Segoe UI', sans-serif;
   margin: 0;
   padding: 20px;
+  font-family: 'Segoe UI', sans-serif;
   background-color: #fff0f5;
   color: #4a004a;
 }
@@ -20,12 +20,14 @@ h1 {
   align-items: flex-start;
 }
 
+/* Columna de cada semestre */
 .semestre {
-  min-width: 250px;
+  min-width: 220px;
   background-color: #ffe0ef;
   border-radius: 12px;
-  padding: 12px;
+  padding: 10px;
   box-shadow: 0 2px 10px rgba(255, 105, 180, 0.2);
+  flex-shrink: 0;
 }
 
 .semestre h2 {
@@ -37,6 +39,7 @@ h1 {
   padding-bottom: 6px;
 }
 
+/* Cuadro de asignatura */
 .asignatura {
   background-color: #fff;
   border: 2px solid #ffb6c1;
@@ -68,3 +71,7 @@ button {
 }
 
 button:disabled {
+  background-color: #ffd1dc;
+  color: #888;
+  cursor: not-allowed;
+}
