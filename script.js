@@ -1,111 +1,138 @@
+// Datos de la malla
 const malla = {
-  "Semestre 1": {
-    "Preliminares de Matemática": [],
-    "Algebra": ["Preliminares de Matemática"],
-    "Análisis Matemático I a": ["Preliminares de Matemática"],
-    "Ingeniería y Sistemas Socioeconómicos": []
-  },
-  "Semestre 2": {
-    "Geometría Analítica": ["Algebra", "Análisis Matemático I a"],
-    "Sistemas de Representación I": [],
-    "Análisis Matemático I b": ["Análisis Matemático I a"],
-    "Física I": ["Algebra", "Análisis Matemático I a"]
-  },
-  "Semestre 3": {
-    "Análisis Matemático II": ["Geometría Analítica", "Análisis Matemático I b"],
-    "Química General": ["Análisis Matemático I a"],
-    "Física II": ["Física I", "Análisis Matemático I b"],
-    "Estabilidad I": ["Física I", "Análisis Matemático I b", "Sistemas de Representación I"],
-    "Inglés I": []
-  },
-  "Semestre 4": {
-    "Análisis Matemático III": ["Análisis Matemático II"],
-    "Estabilidad II": ["Estabilidad I"],
-    "Probabilidad y Estadística": ["Algebra", "Análisis Matemático I b"],
-    "Métodos Numéricos": ["Análisis Matemático II"],
-    "Computación I": ["Algebra"],
-    "Inglés II": ["Inglés I"]
-  },
-  "Semestre 5": {
-    "Termodinámica": ["Física I", "Química General", "Análisis Matemático II"],
-    "Computación II": ["Computación I"],
-    "Sistemas de Representación II": ["Sistemas de Representación I", "Computación I"],
-    "Conocimiento de Materiales": ["Química General", "Estabilidad II"],
-    "Mecánica Racional": ["Análisis Matemático II"]
-  },
-  "Semestre 6": {
-    "Elementos de Máquinas": ["Conocimiento de Materiales", "Mecánica Racional"],
-    "Introducción a la Economía": ["Ingeniería y Sistemas Socioeconómicos", "Inglés I", "Probabilidad y Estadística"],
-    "Física III": ["Mecánica Racional", "Inglés I", "Análisis Matemático III", "Probabilidad y Estadística"],
-    "Electrotecnia General": ["Física II", "Análisis Matemático III", "Inglés I"],
-    "Mecánica de los Fluidos": ["Análisis Matemático III", "Mecánica Racional", "Termodinámica"]
-  },
-  "Semestre 7": {
-    "Máquinas y Medidas Eléctricas": ["Elementos de Máquinas", "Electrotecnia General"],
-    "Electrónica I": ["Física III", "Electrotecnia General"],
-    "Tecnología Mecánica": ["Elementos de Máquinas"],
-    "Organización Industrial I": ["Introducción a la Economía"]
-  },
-  "Semestre 8": {
-    "Investigación Operativa": ["Organización Industrial I", "Inglés II"],
-    "Organización Industrial II": ["Organización Industrial I"],
-    "Instalaciones Eléctricas": ["Máquinas y Medidas Eléctricas", "Inglés II"],
-    "Máquinas Térmicas": ["Métodos Numéricos", "Mecánica de los Fluidos", "Elementos de Máquinas"],
-    "Máquinas Hidráulicas": ["Mecánica de los Fluidos", "Elementos de Máquinas"]
-  },
-  "Semestre 9": {
-    "Legislación": ["Organización Industrial II"],
-    "Instalaciones Industriales": ["Máquinas Hidráulicas", "Máquinas Térmicas", "Máquinas y Medidas Eléctricas"],
-    "Gestión de Calidad": ["Organización Industrial II", "Investigación Operativa"],
-    "Organización Industrial III": ["Organización Industrial II"],
-    "Seguridad, Higiene y Gestión Ambiental": ["Organización Industrial II"],
-    "Costos Industriales": ["Organización Industrial II"]
-  },
-  "Semestre 10": {
-    "Electiva 1": [],
-    "Electiva 2": [],
-    "Electiva 3": [],
-    "Electiva 4": []
-  },
-  "Semestre 11": {
-    "Emprendedurismo y Proyecto de Inversión": [
-      "Instalaciones Eléctricas", "Gestión de Calidad", "Organización Industrial III",
-      "Seguridad, Higiene y Gestión Ambiental", "Costos Industriales", "Legislación",
-      "Electiva 1", "Electiva 2", "Electiva 3", "Electiva 4"
-    ]
-  },
-  "Final de Carrera": {
-    "Proyecto Final de Ingeniería": ["Emprendedurismo y Proyecto de Inversión"]
-  }
+  "I": [
+    { nombre: "Preliminares de Matemática", abre: ["Algebra", "Análisis Matemático I a"] },
+    { nombre: "Algebra", abre: ["Geometría Analítica", "Física I", "Probabilidad y Estadística", "Computación I"] },
+    { nombre: "Análisis Matemático I a", abre: ["Geometría Analítica", "Análisis Matemático I b", "Física I", "Química General"] },
+    { nombre: "Ingeniería y Sistemas Socioeconómicos", abre: ["Introducción a la Economía"] }
+  ],
+  "II": [
+    { nombre: "Geometría Analítica", abre: ["Análisis Matemático II"] },
+    { nombre: "Sistemas de Representación I", abre: ["Estabilidad I", "Sistemas de Representación II"] },
+    { nombre: "Análisis Matemático I b", abre: ["Análisis Matemático II", "Física II", "Estabilidad I", "Probabilidad y Estadística"] },
+    { nombre: "Física I", abre: ["Física II", "Estabilidad I", "Termodinámica", "Mecánica Racional"] }
+  ],
+  "III": [
+    { nombre: "Análisis Matemático II", abre: ["Análisis Matemático III", "Métodos Numéricos", "Termodinámica", "Mecánica Racional"] },
+    { nombre: "Química General", abre: ["Termodinámica", "Conocimiento de Materiales"] },
+    { nombre: "Física II", abre: ["Electrotecnia General"] },
+    { nombre: "Estabilidad I", abre: ["Estabilidad II"] },
+    { nombre: "Inglés I", abre: ["Inglés II", "Electrotecnia General", "Elementos de Máquinas", "Física III", "Introducción a la Economía", "Mecánica de los Fluidos"] }
+  ],
+  "IV": [
+    { nombre: "Análisis Matemático III", abre: ["Física III", "Electrotecnia General", "Mecánica de los Fluidos"] },
+    { nombre: "Estabilidad II", abre: ["Conocimiento de Materiales"] },
+    { nombre: "Probabilidad y Estadística", abre: ["Introducción a la Economía", "Física III", "Máquinas y Medidas Eléctricas"] },
+    { nombre: "Métodos Numéricos", abre: ["Máquinas Térmicas"] },
+    { nombre: "Computación I", abre: ["Computación II", "Sistemas de Representación II"] },
+    { nombre: "Inglés II", abre: ["Instalaciones Eléctricas", "Investigación Operativa", "Máquinas Hidráulicas", "Máquinas Térmicas", "Organización Industrial II"] }
+  ],
+  "V": [
+    { nombre: "Termodinámica", abre: ["Mecánica de los Fluidos"] },
+    { nombre: "Computación II", abre: [] },
+    { nombre: "Sistemas de Representación II", abre: [] },
+    { nombre: "Conocimiento de Materiales", abre: ["Elementos de Máquinas"] },
+    { nombre: "Mecánica Racional", abre: ["Elementos de Máquinas", "Física III", "Mecánica de los Fluidos"] }
+  ],
+  "VI": [
+    { nombre: "Elementos de Máquinas", abre: ["Máquinas y Medidas Eléctricas", "Tecnología Mecánica", "Máquinas Hidráulicas", "Máquinas Térmicas"] },
+    { nombre: "Introducción a la Economía", abre: ["Organización Industrial I"] },
+    { nombre: "Física III", abre: ["Electrónica I"] },
+    { nombre: "Electrotecnia General", abre: ["Máquinas y Medidas Eléctricas", "Electrónica I"] },
+    { nombre: "Mecánica de los Fluidos", abre: ["Máquinas Térmicas", "Máquinas Hidráulicas"] }
+  ],
+  "VII": [
+    { nombre: "Máquinas y Medidas Eléctricas", abre: ["Instalaciones Eléctricas", "Instalaciones Industriales"] },
+    { nombre: "Electrónica I", abre: [] },
+    { nombre: "Tecnología Mecánica", abre: [] },
+    { nombre: "Organización Industrial I", abre: ["Investigación Operativa", "Organización Industrial II"] }
+  ],
+  "VIII": [
+    { nombre: "Investigación Operativa", abre: ["Gestión de Calidad"] },
+    { nombre: "Organización Industrial II", abre: ["Legislación", "Gestión de Calidad", "Organización Industrial III", "Seguridad, Higiene y Gestión Ambiental", "Costos Industriales"] },
+    { nombre: "Instalaciones Eléctricas", abre: ["Emprendedurismo y Proyecto de Inversión"] },
+    { nombre: "Máquinas Térmicas", abre: ["Instalaciones Industriales"] },
+    { nombre: "Máquinas Hidráulicas", abre: ["Instalaciones Industriales"] }
+  ],
+  "IX": [
+    { nombre: "Legislación", abre: ["Emprendedurismo y Proyecto de Inversión"] },
+    { nombre: "Instalaciones Industriales", abre: [] },
+    { nombre: "Gestión de Calidad", abre: ["Emprendedurismo y Proyecto de Inversión"] },
+    { nombre: "Organización Industrial III", abre: ["Emprendedurismo y Proyecto de Inversión"] },
+    { nombre: "Seguridad, Higiene y Gestión Ambiental", abre: ["Emprendedurismo y Proyecto de Inversión"] },
+    { nombre: "Costos Industriales", abre: ["Emprendedurismo y Proyecto de Inversión"] }
+  ],
+  "X": [
+    { nombre: "Electiva 1", abre: ["Emprendedurismo y Proyecto de Inversión"] },
+    { nombre: "Electiva 2", abre: ["Emprendedurismo y Proyecto de Inversión"] },
+    { nombre: "Electiva 3", abre: ["Emprendedurismo y Proyecto de Inversión"] },
+    { nombre: "Electiva 4", abre: ["Emprendedurismo y Proyecto de Inversión"] }
+  ],
+  "XI": [
+    { nombre: "Emprendedurismo y Proyecto de Inversión", abre: ["Proyecto Final de Ingeniería"] }
+  ],
+  "Final": [
+    { nombre: "Proyecto Final de Ingeniería", abre: [] }
+  ]
 };
 
-const aprobadas = new Set();
+// Estado de cada ramo
+const estadoRamos = {};
 
-function crearMalla() {
-  const contenedor = document.getElementById("malla");
+// Inicializar DOM
+const mallaDiv = document.getElementById("malla");
 
-  Object.entries(malla).forEach(([semestre, asignaturas]) => {
-    const columna = document.createElement("div");
-    columna.className = "semestre";
+for (const [semestre, ramos] of Object.entries(malla)) {
+  const semDiv = document.createElement("div");
+  semDiv.className = "semestre";
+  semDiv.innerHTML = `<h2>Semestre ${semestre}</h2>`;
 
-    const titulo = document.createElement("h2");
-    titulo.textContent = semestre;
-    columna.appendChild(titulo);
+  for (const ramo of ramos) {
+    const ramoDiv = document.createElement("div");
+    ramoDiv.className = "ramo";
+    ramoDiv.id = ramo.nombre;
+    ramoDiv.textContent = ramo.nombre;
 
-    Object.entries(asignaturas).forEach(([nombre, requisitos]) => {
-      const card = document.createElement("div");
-      card.className = "asignatura";
-      card.id = nombre;
+    const boton = document.createElement("button");
+    boton.className = "boton";
+    boton.textContent = "Aprobé";
+    boton.onclick = () => aprobarRamo(ramo.nombre);
 
-      const h3 = document.createElement("h3");
-      h3.textContent = nombre;
+    ramoDiv.appendChild(boton);
+    semDiv.appendChild(ramoDiv);
+    estadoRamos[ramo.nombre] = { aprobado: false, requisitos: [], abre: ramo.abre };
 
-      const btn = document.createElement("button");
-      btn.textContent = "Aprobar";
-      btn.disabled = requisitos.length > 0;
+    // Guardar los requisitos al revés
+    for (const destino of ramo.abre) {
+      if (!estadoRamos[destino]) estadoRamos[destino] = { aprobado: false, requisitos: [], abre: [] };
+      estadoRamos[destino].requisitos.push(ramo.nombre);
+    }
+  }
 
-      btn.addEventListener("click", () => aprobar(nombre));
+  mallaDiv.appendChild(semDiv);
+}
 
-      card.appendChild(h3);
-      card.appendChild(btn);
-      columna
+// Activar los ramos iniciales (sin requisitos)
+function actualizarEstado() {
+  for (const [nombre, datos] of Object.entries(estadoRamos)) {
+    const div = document.getElementById(nombre);
+    if (!div) continue;
+    if (datos.aprobado) {
+      div.classList.add("aprobado");
+      div.classList.remove("activo");
+    } else if (datos.requisitos.every(req => estadoRamos[req]?.aprobado)) {
+      div.classList.add("activo");
+    } else {
+      div.classList.remove("activo");
+    }
+  }
+}
+
+function aprobarRamo(nombre) {
+  if (!estadoRamos[nombre] || estadoRamos[nombre].aprobado) return;
+  estadoRamos[nombre].aprobado = true;
+  actualizarEstado();
+}
+
+// Inicialización
+actualizarEstado();
