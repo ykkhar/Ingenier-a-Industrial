@@ -148,3 +148,111 @@ function aprobarRamo(nombre) {
 }
 
 actualizarEstado();
+
+// Paso 1: Crear estadoRamos desde malla y dependencias
+const malla = {
+  // mismo contenido que antes...
+  // (copiar aquí toda la estructura original que ya tienes)
+};
+
+const estadoRamos = {};
+const ramosPorSemestre = {};
+
+// Recolectar todos los ramos y dependencias
+for (const [semestre, ramos] of Object.entries(malla)) {
+  ramosPorSemestre[semestre] = [];
+  for (const ramo of ramos) {
+    // Crear estado del ramo si no existe
+    if (!estadoRamos[ramo.nombre]) {
+      estadoRamos[ramo.nombre] = { aprobado: false, requisitos: [], abre: [] };
+    }
+    estadoRamos[ramo.nombre].abre = ramo.abre;
+
+    // Registrar en el semestre
+    ramosPorSemestre[semestre].push(ramo.nombre);
+
+    // Para cada dependencia, agregarle el requisito actual
+    for (const destino of ramo.abre) {
+      if (!estadoRamos[destino]) {
+        estadoRamos[destino] = { aprobado: false, requisitos: [], abre: [] };
+      }
+      estadoRamos[destino].requisitos.push(ramo.nombre);
+    }
+  }
+}
+
+// Paso 2: Crear HTML de todos los ramos
+const mallaDiv = document.getElementById("malla");
+
+for (const [semestre, ramos] of Object.entries(ramosPorSemestre)) {
+  const semDiv = document.createElement("div");
+  semDiv.className = "semestre";
+  semDiv.innerHTML = `<h2>Semestre ${semestre}</h2>`;
+
+  for (const nombreRamo of ramos) {
+    const ramoDiv = crearRamoDiv(nombreRamo);
+    semDiv.appendChild(ramoDiv);
+  }
+
+  mallaDiv.appendChild(semDiv);
+}
+
+// Paso 3: Agregar ramos "huérfanos" que no estaban en ningún semestre
+const ramosNoUbicados = Object.keys(estadoRamos).filter(nombre =>
+  !Object.values(ramosPorSemestre).flat().includes(nombre)
+);
+
+if (ramosNoUbicados.length > 0) {
+  const otrosDiv = document.createElement("div");
+  otrosDiv.className = "semestre";
+  otrosDiv.innerHTML = `<h2>Otros</h2>`;
+
+  for (const nombre of ramosNoUbicados) {
+    const ramoDiv = crearRamoDiv(nombre);
+    otrosDiv.appendChild(ramoDiv);
+  }
+
+  mallaDiv.appendChild(otrosDiv);
+}
+
+// Función para crear un ramo con botón
+function crearRamoDiv(nombre) {
+  const div = document.createElement("div");
+  div.className = "ramo";
+  div.id = nombre;
+  div.textContent = nombre;
+
+  const boton = document.createElement("button");
+  boton.className = "boton";
+  boton.textContent = "Aprobé";
+  boton.onclick = () => aprobarRamo(nombre);
+
+  div.appendChild(boton);
+  return div;
+}
+
+// Función para marcar ramos desbloqueados/aprobados
+function actualizarEstado() {
+  for (const [nombre, datos] of Object.entries(estadoRamos)) {
+    const div = document.getElementById(nombre);
+    if (!div) continue;
+
+    if (datos.aprobado) {
+      div.classList.add("aprobado");
+      div.classList.remove("activo");
+    } else if (datos.requisitos.every(req => estadoRamos[req]?.aprobado)) {
+      div.classList.add("activo");
+    } else {
+      div.classList.remove("activo");
+    }
+  }
+}
+
+// Acción al presionar "Aprobé"
+function aprobarRamo(nombre) {
+  if (!estadoRamos[nombre] || estadoRamos[nombre].aprobado) return;
+  estadoRamos[nombre].aprobado = true;
+  actualizarEstado();
+}
+
+actualizarEstado();
