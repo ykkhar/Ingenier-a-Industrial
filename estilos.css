@@ -1,71 +1,71 @@
 body {
   font-family: Arial, sans-serif;
-  background-color: #fff0f5;
+  background: #fff0f5;
   margin: 0;
-  padding: 2rem;
-  color: #880e4f;
+  padding: 20px;
 }
 
 h1 {
   text-align: center;
-  color: #ad1457;
+  color: #d63384;
 }
 
-.malla {
+.contenedor-malla {
   display: flex;
-  gap: 20px;
+  flex-wrap: nowrap;
   overflow-x: auto;
-  padding-bottom: 2rem;
+  gap: 20px;
+  padding: 20px;
 }
 
 .semestre {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  background-color: #f8bbd0;
-  border-radius: 12px;
-  padding: 10px;
-  min-width: 220px;
+  min-width: 250px;
+  background: #ffe6f0;
+  border: 2px solid #d63384;
+  border-radius: 10px;
+  padding: 15px;
+  flex-shrink: 0;
 }
 
 .semestre h2 {
   text-align: center;
-  font-size: 1.1rem;
-  margin: 0 0 10px;
+  color: #c2185b;
+  margin-bottom: 10px;
+  font-size: 1.2em;
 }
 
 .ramo {
-  background-color: #fce4ec;
-  border: 2px solid #f06292;
-  border-radius: 8px;
+  background: #fce4ec;
+  border: 1px solid #d63384;
   padding: 10px;
-  font-size: 0.9rem;
-  position: relative;
-  opacity: 0.4;
-  transition: all 0.3s ease;
+  margin: 5px 0;
+  border-radius: 8px;
+  transition: background 0.3s, opacity 0.3s;
+  opacity: 0.5;
 }
 
 .ramo.activo {
   opacity: 1;
-  cursor: pointer;
+  background: #fff;
+  border-color: #ad1457;
 }
 
 .ramo.aprobado {
-  background-color: #f48fb1;
+  background: #f8bbd0;
+  border-color: #880e4f;
   text-decoration: line-through;
 }
 
 .boton {
-  margin-top: 6px;
-  font-size: 0.8rem;
-  background-color: #ec407a;
+  margin-top: 5px;
+  padding: 5px 10px;
+  background: #d63384;
   color: white;
   border: none;
-  border-radius: 6px;
-  padding: 4px 8px;
+  border-radius: 5px;
   cursor: pointer;
 }
 
 .boton:hover {
-  background-color: #d81b60;
+  background: #c2185b;
 }
