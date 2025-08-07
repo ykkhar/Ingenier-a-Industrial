@@ -15,12 +15,12 @@ h1 {
 .malla-container {
   display: flex;
   overflow-x: auto;
-  padding-bottom: 20px;
   gap: 20px;
   align-items: flex-start;
+  padding-bottom: 20px;
 }
 
-/* Columna de cada semestre */
+/* Semestre columna */
 .semestre {
   min-width: 220px;
   background-color: #ffe0ef;
@@ -39,7 +39,7 @@ h1 {
   padding-bottom: 6px;
 }
 
-/* Cuadro de asignatura */
+/* Tarjeta de asignatura */
 .asignatura {
   background-color: #fff;
   border: 2px solid #ffb6c1;
